@@ -1,27 +1,64 @@
 {
   "version": 2,
-  "name": "apollo-zeit",
-  "regions": [
-    "bru"
-  ],
+  "name": "full-stack-grocery",
   "builds": [
     {
-      "src": "www/next.config.js",
-      "use": "@now/next"
+      "src": "www/package.json",
+      "use": "@now/static-build",
+      "config": {
+        "distDir": "build"
+      }
     },
     {
-      "src": "api/index.ts",
-      "use": "@now/node@canary"
+      "src": "api/index.js",
+      "use": "@now/node"
     }
   ],
   "routes": [
     {
       "src": "/api",
-      "dest": "api/index.ts"
+      "dest": "api/index.js"
+    },
+    {
+      "src": "/static/(.*)",
+      "headers": {
+        "cache-control": "s-maxage=31536000,immutable"
+      },
+      "dest": "/static/$1"
+    },
+    {
+      "src": "/favicon.ico",
+      "dest": "/favicon.ico"
+    },
+    {
+      "src": "/asset-manifest.json",
+      "dest": "/asset-manifest.json"
+    },
+    {
+      "src": "/manifest.json",
+      "dest": "/manifest.json"
+    },
+    {
+      "src": "/precache-manifest.(.*)",
+      "dest": "/precache-manifest.$1"
+    },
+    {
+      "src": "/service-worker.js",
+      "headers": {
+        "cache-control": "s-maxage=0"
+      },
+      "dest": "/service-worker.js"
     },
     {
       "src": "/(.*)",
-      "dest": "www/$1"
+      "headers": {
+        "cache-control": "s-maxage=0"
+      },
+      "dest": "/index.html"
     }
-  ]
+  ],
+  "env": {
+    "DATABASE_URI": "@my-database-uri",
+    "AUTH_STRING": "@my-auth-string"
+  }
 }
