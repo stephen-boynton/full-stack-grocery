@@ -10,7 +10,7 @@
     "graphql": "^14.0.2",
     "jsonwebtoken": "^8.5.1",
     "lodash": "^4.17.11",
-    "mongoose": "^5.5.14"
+    "mongoose": "^5.7.5"
   },
   "devDependencies": {
     "eslint": "^5.16.0",
